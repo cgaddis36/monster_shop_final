@@ -17,7 +17,7 @@ RSpec.describe 'Merchant Order Show Page' do
 
     click_link("Add Bulk Discounts")
 
-    expect(current_path).to eq("/merchant/items/discounts")
+    expect(current_path).to eq("/merchant/discounts")
 save_and_open_page
 
   end
