@@ -12,3 +12,5 @@ brian = Merchant.create!(name: 'Brians Bagels', address: '125 Main St', city: 'D
 megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
 megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
 brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
+merchant = megan.users.create!(name: "Megan", address: "123 Megs Way", city: "Denver", state: "CO", zip: "12345", email: "meg@example.com", password: "meg", role: 1)
+merchant = brian.users.create!(name: "Brian", address: "123 Brians Way", city: "Denver", state: "CO", zip: "12345", email: "brian@example.com", password: "brian", role: 1)
