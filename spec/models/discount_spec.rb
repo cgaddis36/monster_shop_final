@@ -7,7 +7,7 @@ RSpec.describe Discount do
 
   describe 'Validations' do
     it {should validate_presence_of :name}
-    it {should validate_presence_of :desired_quantity}
-    it {should validate_presence_of :percentage}
+    it {should validate_numericality_of(:desired_quantity).is_greater_than(0)}
+    it {should validate_numericality_of(:percentage).is_greater_than(0).is_less_than(100)}
   end
 end
