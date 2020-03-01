@@ -23,7 +23,8 @@ RSpec.describe 'Merchant Order Show Page' do
     visit '/merchant/discounts'
 
     expect(Discount.all.count).to eq(0)
-    expect(page).to have_field("item_quantity")
-    expect(page).to have_selector("discount")
+    expect(page).to have_field("desired_quantity")
+    save_and_open_page
+    expect(page).to have_selector("percentage")
   end
 end
