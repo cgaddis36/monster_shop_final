@@ -10,8 +10,8 @@ class Merchant::DiscountsController < Merchant::BaseController
       redirect_to '/merchant/discounts'
     else
       flash[:error] = discount.errors.full_messages.to_sentence
+      redirect_to '/merchant/discounts'
     end
-    require "pry"; binding.pry
   end
 
   private
