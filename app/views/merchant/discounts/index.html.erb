@@ -1,18 +1,13 @@
+<h1>Current Discounts</h1>
+  <% @discounts.each do |discount| %>
+    <section id= <%= "discount-#{discount.id}" %>>
+    <%= discount.name %>
+    <%= "#{discount.percentage}% off of #{discount.desired_quantity} Items" %>
+    <%= link_to "Edit this discount", '/merchant/discounts/edit', method: :patch %>
+    <section/>
+  <% end %>
+
   <h1 align= "center">Create Discount</h1>
 <center>
-  <%= form_tag '/merchant/discounts', method: :post do |f| %>
-
-    <%= label_tag :name %>
-    <%= text_field_tag :name %>
-
-    <%= label_tag :desired_quantity %>
-    <%= text_field_tag :desired_quantity %>
-
-    <%= label_tag :percentage %>
-    <%= text_field_tag :percentage %>
-
-    <%= submit_tag 'Create Discount' %>
-  <% end %>
-</center>
-
+  <%= render partial: 'form', locals: {path: '/merchant/discounts', method: :post, button_text: 'Create Discount'} %>
 </center>
