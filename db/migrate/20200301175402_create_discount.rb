@@ -4,7 +4,7 @@ class CreateDiscount < ActiveRecord::Migration[5.1]
       t.string :name
       t.integer :desired_quantity
       t.integer :percentage
-      t.references :item, foreign_key: true
+      t.references :merchant, foreign_key: true
     end
   end
 end
