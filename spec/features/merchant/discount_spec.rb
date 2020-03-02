@@ -33,5 +33,43 @@ RSpec.describe 'Merchant Order Show Page' do
 
     click_on("Create Discount")
 
+    expect(Discount.all.count).to eq(1)
+
+    expect(current_path).to eq('/merchant/discounts')
+
+    fill_in "name", with: ""
+    fill_in "desired_quantity", with: "10"
+    fill_in "percentage", with: "40"
+
+    click_on("Create Discount")
+
+    expect(page).to have_content("Name can't be blank")
+
+    fill_in "name", with: "Discount 2"
+    fill_in "desired_quantity", with: "-1"
+    fill_in "percentage", with: "100"
+
+    click_on("Create Discount")
+
+    expect(page).to have_content("Desired quantity must be greater than 0")
+    expect(page).to have_content("Percentage must be less than 100")
+  end
+  it "After I add a discount it appears on the discounts page" do
+    visit '/merchant/discounts'
+
+    fill_in "name", with: "Discount 1"
+    fill_in "desired_quantity", with: "10"
+    fill_in "percentage", with: "40"
+
+    click_on("Create Discount")
+
+    discount = Discount.last
+
+    within "#discount-#{discount.id}" do
+      expect(page).to have_content("Discount 1")
+      expect(page).to have_content("40% off of 10 Items")
+      expect(page).to have_link("Edit this discount")
+      click_link("Edit this discount")
+    end
   end
 end
