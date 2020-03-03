@@ -96,4 +96,23 @@ RSpec.describe 'Merchant Order Show Page' do
 
     expect(page).to have_content("Name can't be blank, Desired quantity must be greater than 0, and Percentage must be less than 100")
   end
+  it "Can delete a discount from the database" do
+    @merchant.discounts.create(name: "Discount 1", desired_quantity: "3", percentage: "30")
+
+    visit '/merchant/discounts'
+
+    discount = Discount.last
+
+    within "#discount-#{discount.id}" do
+      expect(page).to have_content(discount.name)
+      expect(page).to have_content("30% off of 3 Items")
+      expect(page).to have_link("Edit this discount")
+      expect(page).to have_button("Delete this discount")
+      click_button("Delete this discount")
+    end
+
+    expect(current_path).to eq('/merchant/discounts')
+    expect(page).to_not have_content(discount.name)
+    expect(page).to_not have_content("30% off of 3 Items")
+  end
 end
