@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     post '/discounts', to: 'discounts#create', as: 'create_discounts'
     get '/discounts/:discount_id/edit', to: 'discounts#edit'
     patch '/discounts/:discount_id', to: 'discounts#update'
+    delete '/discounts/:discount_id', to: 'discounts#destroy'
   end
 
   namespace :admin do
