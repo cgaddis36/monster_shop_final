@@ -71,6 +71,7 @@ RSpec.describe 'Merchant Order Show Page' do
       expect(page).to have_link("Edit this discount")
       click_link("Edit this discount")
     end
+
     expect(current_path).to eq("/merchant/discounts/#{discount.id}/edit")
 
     fill_in "name", with: "Discount 1.0"

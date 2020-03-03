@@ -1,1 +1,1 @@
-<%= render partial: 'form', locals: {path: "/merchant/discounts/#{@discount.id}", method: :patch, button_text: 'Edit Discount'} %>
+<%= render partial: 'form', locals: {path: merchant_patch_discount_path(@discount), method: :patch, button_text: 'Edit Discount'} %>
