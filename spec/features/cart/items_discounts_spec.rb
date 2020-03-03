@@ -69,5 +69,59 @@ RSpec.describe 'Merchant Order Show Page' do
       expect(page).to have_content("Subtotal: $200.00")
     end
 
+    click_on("Log Out")
+
+    click_on("Home")
+
+    click_on("Log In")
+
+    fill_in "email", with: @bill.email
+    fill_in "password", with: @bill.password
+
+    click_button("Log In")
+
+    visit '/merchant/discounts'
+
+    fill_in "name", with: "Discount 2"
+    fill_in "desired_quantity", with: "4"
+    fill_in "percentage", with: "25"
+
+    click_on("Create Discount")
+
+    click_on("Log Out")
+
+    click_on("Home")
+
+    click_on("Log In")
+
+    fill_in "email", with: @meredith.email
+    fill_in "password", with: @meredith.password
+
+    click_button("Log In")
+
+    click_on("Items")
+
+    click_link(@item_1.name)
+    click_button("Add to Cart")
+
+    click_link(@item_2.name)
+    click_button("Add to Cart")
+
+    click_link(@item_3.name)
+    click_button("Add to Cart")
+
+    click_link("Cart")
+
+    within "#item-#{@item_1.id}" do
+      click_button("More of This!")
+      click_button("More of This!")
+      click_button("More of This!")
+      expect(page).to have_content("Subtotal: $1,500.00")
+    end
+
+    click_button("Check Out")
+
+    expect(OrderItem.first.price).to eq(375)
+    expect(OrderItem.first.quantity).to eq(4)
   end
 end

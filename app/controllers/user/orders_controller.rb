@@ -13,11 +13,19 @@ class User::OrdersController < ApplicationController
     order = current_user.orders.new
     order.save
       cart.items.each do |item|
-        order.order_items.create({
-          item: item,
-          quantity: cart.count_of(item.id),
-          price: item.price
-          })
+        if item.applicable_discounts && item.applicable_discounts <= cart.count_of(item.id)
+          order.order_items.create({
+            item: item,
+            quantity: cart.count_of(item.id),
+            price: (cart.discounted_item(item.id) / cart.count_of(item.id))
+            })
+        else
+          order.order_items.create({
+            item: item,
+            quantity: cart.count_of(item.id),
+            price: item.price
+            })
+        end
       end
     session.delete(:cart)
     flash[:notice] = "Order created successfully!"
