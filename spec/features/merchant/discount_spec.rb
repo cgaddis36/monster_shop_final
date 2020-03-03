@@ -85,6 +85,15 @@ RSpec.describe 'Merchant Order Show Page' do
       expect(page).to have_content("Discount 1.0")
       expect(page).to have_content("41% off of 11 Items")
       expect(page).to have_link("Edit this discount")
+      click_link("Edit this discount")
     end
+
+    fill_in "name", with: ""
+    fill_in "desired_quantity", with: "-3"
+    fill_in "percentage", with: "102"
+
+    click_on("Edit Discount")
+
+    expect(page).to have_content("Name can't be blank, Desired quantity must be greater than 0, and Percentage must be less than 100")
   end
 end
