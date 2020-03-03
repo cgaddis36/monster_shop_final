@@ -71,5 +71,20 @@ RSpec.describe 'Merchant Order Show Page' do
       expect(page).to have_link("Edit this discount")
       click_link("Edit this discount")
     end
+    expect(current_path).to eq("/merchant/discounts/#{discount.id}/edit")
+
+    fill_in "name", with: "Discount 1.0"
+    fill_in "desired_quantity", with: "11"
+    fill_in "percentage", with: "41"
+
+    click_on("Edit Discount")
+
+    expect(current_path).to eq("/merchant/discounts")
+
+    within "#discount-#{discount.id}" do
+      expect(page).to have_content("Discount 1.0")
+      expect(page).to have_content("41% off of 11 Items")
+      expect(page).to have_link("Edit this discount")
+    end
   end
 end
