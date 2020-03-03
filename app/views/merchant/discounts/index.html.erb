@@ -3,7 +3,7 @@
     <section id= <%= "discount-#{discount.id}" %>>
     <%= discount.name %>
     <%= "#{discount.percentage}% off of #{discount.desired_quantity} Items" %>
-    <%= link_to "Edit this discount", '/merchant/discounts/edit', method: :patch %>
+    <%= link_to "Edit this discount", "/merchant/discounts/#{discount.id}/edit", method: :get %>
     <section/>
   <% end %>
 
