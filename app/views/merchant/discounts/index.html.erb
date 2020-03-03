@@ -4,6 +4,8 @@
     <%= discount.name %>
     <%= "#{discount.percentage}% off of #{discount.desired_quantity} Items" %>
     <%= link_to "Edit this discount", "/merchant/discounts/#{discount.id}/edit", method: :get %>
+    <%= button_to "Delete this discount", "/merchant/discounts/#{discount.id}", method: :delete %>
+
     <section/>
   <% end %>
 
