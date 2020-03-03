@@ -50,6 +50,8 @@ class Cart
 
   def percentage_calculator(item_id)
     item = Item.find(item_id)
-    (1- ((item.merchant.discounts.pluck(:percentage).max / 100.to_f)))
+    item_count = count_of(item_id)
+    discount = item.merchant.discounts.find_by(desired_quantity: item.merchant.discounts.pluck(:desired_quantity).select {|x| x <= item_count}.max)
+    1- (discount.percentage / 100.to_f)
   end
 end
