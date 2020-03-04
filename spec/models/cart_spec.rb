@@ -79,8 +79,12 @@ RSpec.describe Cart do
       expect(@cart_2.discounted_item(@hippo.id)).to eq(80.0)
     end
 
-    it '.percentage_calculator' do
+    it '.percentage_calculator()' do
       expect(@cart_2.percentage_calculator(@hippo.id)).to eq(0.8)
+    end
+
+    it '.max_discount()' do
+      expect(@cart_2.max_discount(@hippo.id)).to eq(20)
     end
   end
 end
