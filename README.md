@@ -24,7 +24,22 @@
 
   User Story 3
   - When I enter in both of the above fields correctly, the constraints are applied to the price of an item in an order that
-    meets these discount criteria when the "Create Order" button is clicked.
+    meets these discount criteria when the "Create Discount" button is clicked.
+
+    User Story 4
+    - After a discount is created, I see a link to edit this discount from the bulk discounts show page.  After I fill out the fields correctly with the correct attributes and I click the "Edit this Discount" button, this discount is saved with new attributes and I am redirected to the bulk discounts page
+    '/merchant/discounts'.
+
+    User Story 5
+    - After a discount is created, I see a button to delete this discount.  When I click this button, the discount is deleted from the database, and I am redirected to the bulk discounts page
+
+    User Story 6
+    - When an order is being created for each item in the order that meets the criteria for a Bulk Discount on that item, the following happen:
+      - the items that meet the criteria for the discount automatically reflect their new discounted price on the cart show page
+      - Discounts from one merchant will not affect items from another merchant in the same cart
+      - Only items which exceed the quantity for the discount will receive the discount
+      - When there is a conflict between two discounts, the greater of the two will be applied.
+      - When the order is created the new discounted price will change the ItemOrders that are being created to reflect the discounted price as well
 
 #### General Goals
 
