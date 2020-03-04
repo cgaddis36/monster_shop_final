@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Merchant Order Show Page' do
+RSpec.describe 'Merchant Bulk Discounts Page' do
   before(:each) do
     @merchant = Merchant.create!(name: 'Snowopolis', address: '123 Polar Ave', city: 'Denver', state: 'CO', zip: 80218)
     @merchant_2 = Merchant.create!(name: 'Tractors & Stuff', address: '125 Greenway Blvd', city: 'Denver', state: 'CO', zip: 80218)
