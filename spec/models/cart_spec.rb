@@ -50,6 +50,10 @@ RSpec.describe Cart do
       expect(@cart.grand_total).to eq(120)
     end
 
+    it '.grand_total_discounted' do
+      expect(@cart_2.grand_total).to eq(200)
+    end
+
     it '.count_of()' do
       expect(@cart.count_of(@ogre.id)).to eq(1)
       expect(@cart.count_of(@giant.id)).to eq(2)
