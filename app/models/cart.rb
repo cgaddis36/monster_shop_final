@@ -29,7 +29,7 @@ class Cart
     @contents.each do |item_id, quantity|
       item = Item.find(item_id)
       if item.applicable_discounts && item.applicable_discounts <= count_of(item.id)
-        grand_total += discounted_item(item_id) 
+        grand_total += discounted_item(item_id)
       else
         grand_total += item.price * quantity
       end
@@ -54,8 +54,11 @@ class Cart
   end
 
   def percentage_calculator(item_id)
+    1 - (max_discount(item_id) / 100.to_f)
+  end
+
+  def max_discount(item_id)
     item = Item.find(item_id)
-    discount = item.merchant.discounts.where('desired_quantity <= ?', count_of(item_id)).pluck(:percentage).max
-    1 - (discount / 100.to_f)
+    item.merchant.discounts.where('desired_quantity <= ?', count_of(item_id)).pluck(:percentage).max
   end
 end
