@@ -43,4 +43,14 @@ class Cart
   def limit_reached?(item_id)
     count_of(item_id) == Item.find(item_id).inventory
   end
+
+  def discounted_item(item_id)
+    percentage_calculator(item_id) * (subtotal_of(item_id))
+  end
+
+  def percentage_calculator(item_id)
+    item = Item.find(item_id)
+    discount = item.merchant.discounts.where('desired_quantity <= ?', count_of(item_id)).pluck(:percentage).max
+    1 - (discount / 100.to_f)
+  end
 end

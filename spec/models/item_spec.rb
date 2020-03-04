@@ -19,13 +19,16 @@ RSpec.describe Item do
   describe 'Instance Methods' do
     before :each do
       @megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
+      @brian = Merchant.create!(name: 'Brians Bananas', address: '123 Banana St', city: 'Denver', state: 'CO', zip: 80218)
       @ogre = @megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
       @giant = @megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
+      @fairy = @brian.items.create!(name: 'Fairy', description: "I'm a Fairy!", price: 30, image: 'https://image.shutterstock.com/image-vector/flying-fairy-260nw-564580660.jpg', active: true, inventory: 10 )
       @review_1 = @ogre.reviews.create(title: 'Great!', description: 'This Ogre is Great!', rating: 5)
       @review_2 = @ogre.reviews.create(title: 'Meh.', description: 'This Ogre is Mediocre', rating: 3)
       @review_3 = @ogre.reviews.create(title: 'EW', description: 'This Ogre is Ew', rating: 1)
       @review_4 = @ogre.reviews.create(title: 'So So', description: 'This Ogre is So so', rating: 2)
       @review_5 = @ogre.reviews.create(title: 'Okay', description: 'This Ogre is Okay', rating: 4)
+      @discount_1 = @megan.discounts.create!(name: "Discount 1", desired_quantity: "4", percentage: "30")
     end
 
     it '.sorted_reviews()' do
@@ -36,6 +39,12 @@ RSpec.describe Item do
 
     it '.average_rating' do
       expect(@ogre.average_rating.round(2)).to eq(3.00)
+    end
+
+    it '.applicable_discounts' do
+      expect(@ogre.applicable_discounts).to be_truthy
+      expect(@giant.applicable_discounts).to be_truthy
+      expect(@fairy.applicable_discounts).to be_falsey
     end
   end
 

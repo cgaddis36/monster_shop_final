@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get :root, to: 'welcome#index'
+  get '/', to: 'welcome#index'
 
   resources :merchants do
     resources :items, only: [:index]
@@ -41,6 +42,9 @@ Rails.application.routes.draw do
     get '/orders/:id/fulfill/:order_item_id', to: 'orders#fulfill'
     get '/discounts', to: 'discounts#index'
     post '/discounts', to: 'discounts#create', as: 'create_discounts'
+    get '/discounts/:discount_id/edit', to: 'discounts#edit', as: 'edit_discounts'
+    patch '/discounts/:discount_id', to: 'discounts#update', as: 'patch_discount'
+    delete '/discounts/:discount_id', to: 'discounts#destroy', as: 'delete_discount'
   end
 
   namespace :admin do

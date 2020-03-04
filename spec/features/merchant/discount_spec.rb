@@ -33,5 +33,87 @@ RSpec.describe 'Merchant Order Show Page' do
 
     click_on("Create Discount")
 
+    expect(Discount.all.count).to eq(1)
+
+    expect(current_path).to eq('/merchant/discounts')
+
+    fill_in "name", with: ""
+    fill_in "desired_quantity", with: "10"
+    fill_in "percentage", with: "40"
+
+    click_on("Create Discount")
+
+    expect(page).to have_content("Name can't be blank")
+
+    fill_in "name", with: "Discount 2"
+    fill_in "desired_quantity", with: "-1"
+    fill_in "percentage", with: "100"
+
+    click_on("Create Discount")
+
+    expect(page).to have_content("Desired quantity must be greater than 0")
+    expect(page).to have_content("Percentage must be less than 100")
+  end
+  it "After I add a discount it appears on the discounts page" do
+    visit '/merchant/discounts'
+
+    fill_in "name", with: "Discount 1"
+    fill_in "desired_quantity", with: "10"
+    fill_in "percentage", with: "40"
+
+    click_on("Create Discount")
+
+    discount = Discount.last
+
+    within "#discount-#{discount.id}" do
+      expect(page).to have_content("Discount 1")
+      expect(page).to have_content("40% off of 10 Items")
+      expect(page).to have_link("Edit this discount")
+      click_link("Edit this discount")
+    end
+
+    expect(current_path).to eq("/merchant/discounts/#{discount.id}/edit")
+
+    fill_in "name", with: "Discount 1.0"
+    fill_in "desired_quantity", with: "11"
+    fill_in "percentage", with: "41"
+
+    click_on("Edit Discount")
+
+    expect(current_path).to eq("/merchant/discounts")
+
+    within "#discount-#{discount.id}" do
+      expect(page).to have_content("Discount 1.0")
+      expect(page).to have_content("41% off of 11 Items")
+      expect(page).to have_link("Edit this discount")
+      click_link("Edit this discount")
+    end
+
+    fill_in "name", with: ""
+    fill_in "desired_quantity", with: "-3"
+    fill_in "percentage", with: "102"
+
+    click_on("Edit Discount")
+
+    expect(page).to have_content("Name can't be blank, Desired quantity must be greater than 0, and Percentage must be less than 100")
+  end
+  it "Can delete a discount from the database" do
+    @merchant.discounts.create(name: "Discount 1", desired_quantity: "3", percentage: "30")
+
+    visit '/merchant/discounts'
+
+    discount = Discount.last
+
+    within "#discount-#{discount.id}" do
+      expect(page).to have_content(discount.name)
+      expect(page).to have_content("30% off of 3 Items")
+      expect(page).to have_link("Edit this discount")
+      expect(page).to have_button("Delete this discount")
+      click_button("Delete this discount")
+    end
+
+    expect(current_path).to eq('/merchant/discounts')
+    expect(page).to_not have_content(discount.name)
+    expect(page).to_not have_content("30% off of 3 Items")
   end
 end
