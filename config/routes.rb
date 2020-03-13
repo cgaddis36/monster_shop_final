@@ -24,7 +24,10 @@ Rails.application.routes.draw do
   get '/items/:id', to: 'items#show', as: 'item'
 
 
-  resources :reviews, only: [:edit, :update, :destroy]
+  # resources :reviews, only: [:edit, :update, :destroy]
+  get '/reviews/:id/edit', to: 'reviews#edit', as: 'edit_review'
+  patch '/reviews/:id', to: 'reviews#update', as: 'review'
+  delete '/reviews/:id', to: 'reviews#destroy'
 
   get '/cart', to: 'cart#show'
   post '/cart/:item_id', to: 'cart#add_item'
@@ -33,8 +36,9 @@ Rails.application.routes.draw do
   delete '/cart/:item_id', to: 'cart#remove_item'
 
   get '/registration', to: 'users#new', as: :registration
+
   resources :users, only: [:create, :update]
-  patch '/user/:id', to: 'users#update'
+  # patch '/user/:id', to: 'users#update'
   get '/profile', to: 'users#show'
   get '/profile/edit', to: 'users#edit'
   get '/profile/edit_password', to: 'users#edit_password'
@@ -49,15 +53,17 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get '/', to: 'dashboard#index', as: :dashboard
-    resources :orders, only: :show
+    # resources :orders, only: :show
+    get '/orders/:id', to: 'orders#show', as: :order
     resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
     put '/items/:id/change_status', to: 'items#change_status'
     get '/orders/:id/fulfill/:order_item_id', to: 'orders#fulfill'
-    get '/discounts', to: 'discounts#index'
-    post '/discounts', to: 'discounts#create', as: 'create_discounts'
-    get '/discounts/:discount_id/edit', to: 'discounts#edit', as: 'edit_discounts'
-    patch '/discounts/:discount_id', to: 'discounts#update', as: 'patch_discount'
-    delete '/discounts/:discount_id', to: 'discounts#destroy', as: 'delete_discount'
+    # get '/discounts', to: 'discounts#index'
+    # post '/discounts', to: 'discounts#create', as: 'create_discounts'
+    # get '/discounts/:discount_id/edit', to: 'discounts#edit', as: 'edit_discounts'
+    # patch '/discounts/:discount_id', to: 'discounts#update', as: 'patch_discount'
+    # delete '/discounts/:discount_id', to: 'discounts#destroy', as: 'delete_discount'
+    resources :discounts, only: [:index, :new, :create, :show, :edit, :update, :destroy]
   end
 
   namespace :admin do
