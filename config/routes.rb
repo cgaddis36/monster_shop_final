@@ -14,17 +14,11 @@ Rails.application.routes.draw do
   get '/merchant/items/:id/change_status', to: 'merchants#show'
   delete '/merchant/items/:id/change_status', to: 'merchants#destroy'
 
-  # resources :items, only: [:index, :show] do
-  #   resources :reviews, only: [:new, :create]
-  # end
-
   post '/items/:item_id/reviews', to: 'reviews#create', as: 'item_reviews'
   get '/items/:item_id/reviews/new', to: 'reviews#new', as: 'new_item_review'
   get '/items', to: 'items#index'
   get '/items/:id', to: 'items#show', as: 'item'
 
-
-  # resources :reviews, only: [:edit, :update, :destroy]
   get '/reviews/:id/edit', to: 'reviews#edit', as: 'edit_review'
   patch '/reviews/:id', to: 'reviews#update', as: 'review'
   delete '/reviews/:id', to: 'reviews#destroy'
@@ -37,8 +31,10 @@ Rails.application.routes.draw do
 
   get '/registration', to: 'users#new', as: :registration
 
-  resources :users, only: [:create, :update]
-  # patch '/user/:id', to: 'users#update'
+  get '/users', to: 'users#edit', as: :user
+  post '/users', to: 'users#create'
+  patch '/users', to: 'users#update'
+
   get '/profile', to: 'users#show'
   get '/profile/edit', to: 'users#edit'
   get '/profile/edit_password', to: 'users#edit_password'
@@ -51,25 +47,26 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#login'
   get '/logout', to: 'sessions#logout'
 
+  get '/merchant/items', to: 'merchant/items#index'
+  post '/merchant/items', to: 'merchant/items#create'
+  get '/merchant/items/new', to: 'merchant/items#new'
+  get '/merchant/items/:id/edit', to: 'merchant/items#edit'
+  put '/merchant/items/:id', to: 'merchant/items#update'
+  patch '/merchant/items/:id', to: 'merchant/items#update'
+  delete '/merchant/items/:id', to: 'merchant/items#destroy'
+
   namespace :merchant do
     get '/', to: 'dashboard#index', as: :dashboard
-    # resources :orders, only: :show
     get '/orders/:id', to: 'orders#show', as: :order
-    resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
     put '/items/:id/change_status', to: 'items#change_status'
     get '/orders/:id/fulfill/:order_item_id', to: 'orders#fulfill'
-    # get '/discounts', to: 'discounts#index'
-    # post '/discounts', to: 'discounts#create', as: 'create_discounts'
-    # get '/discounts/:discount_id/edit', to: 'discounts#edit', as: 'edit_discounts'
-    # patch '/discounts/:discount_id', to: 'discounts#update', as: 'patch_discount'
-    # delete '/discounts/:discount_id', to: 'discounts#destroy', as: 'delete_discount'
     resources :discounts, only: [:index, :new, :create, :show, :edit, :update, :destroy]
   end
 
-  namespace :admin do
-    get '/', to: 'dashboard#index', as: :dashboard
-    resources :merchants, only: [:show, :update]
-    resources :users, only: [:index, :show]
-    patch '/orders/:id/ship', to: 'orders#ship'
-  end
+  get '/admin', to: 'admin/dashboard#index', as: :admin_dashboard
+  get '/admin/merchants/:id', to: 'admin/merchants#show'
+  patch '/admin/merchants/:id', to: 'admin/merchants#update'
+  get '/admin/users', to: 'admin/users#index'
+  get '/admin/users/:id', to: 'admin/users#show'
+  patch '/admin/orders/:id/ship', to: 'admin/orders#ship'
 end
