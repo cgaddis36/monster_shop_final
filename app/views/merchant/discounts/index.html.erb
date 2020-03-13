@@ -3,13 +3,13 @@
     <section id= <%= "discount-#{discount.id}" %>>
     <%= discount.name %>
     <%= "#{discount.percentage}% off of #{discount.desired_quantity} Items" %>
-    <%= link_to "Edit this discount", merchant_edit_discounts_path(discount), method: :get %>
-    <%= button_to "Delete this discount", merchant_delete_discount_path(discount), method: :delete %>
+    <%= link_to "Edit this discount", edit_merchant_discount_path(discount), method: :get %>
+    <%= button_to "Delete this discount", merchant_discount_path(discount), method: :delete %>
 
     <section/>
   <% end %>
 
   <h1 align= "center">Create Discount</h1>
 <center>
-  <%= render partial: 'form', locals: {path: merchant_create_discounts_path, method: :post, button_text: 'Create Discount'} %>
+  <%= render partial: 'form', locals: {path: merchant_discounts_path, method: :post, button_text: 'Create Discount'} %>
 </center>
