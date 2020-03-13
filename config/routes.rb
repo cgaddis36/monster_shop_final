@@ -3,10 +3,6 @@ Rails.application.routes.draw do
   get :root, to: 'welcome#index'
   get '/', to: 'welcome#index'
 
-  # resources :merchants do
-  #   resources :items, only: [:index]
-  # end
-
   get '/merchants', to: 'merchants#index'
   post '/merchants', to: 'merchants#create'
   get '/merchants/new', to: 'merchants#new'
@@ -18,9 +14,15 @@ Rails.application.routes.draw do
   get '/merchant/items/:id/change_status', to: 'merchants#show'
   delete '/merchant/items/:id/change_status', to: 'merchants#destroy'
 
-  resources :items, only: [:index, :show] do
-    resources :reviews, only: [:new, :create]
-  end
+  # resources :items, only: [:index, :show] do
+  #   resources :reviews, only: [:new, :create]
+  # end
+
+  post '/items/:item_id/reviews', to: 'reviews#create', as: 'item_reviews'
+  get '/items/:item_id/reviews/new', to: 'reviews#new', as: 'new_item_review'
+  get '/items', to: 'items#index'
+  get '/items/:id', to: 'items#show', as: 'item'
+
 
   resources :reviews, only: [:edit, :update, :destroy]
 
